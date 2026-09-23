@@ -18,9 +18,11 @@ import os
 from enum import Enum
 from typing import Dict
 
-from . import _keys as KEY
 import paddle
-from .nn.activation import ShiftedSoftPlus
+
+from ppmat.models.common.activation import ShiftedSoftPlus
+
+from . import _keys as KEY
 
 HIENET_VERSION = "1.0.0"
 _prefix = os.path.abspath(f"{os.path.dirname(__file__)}")

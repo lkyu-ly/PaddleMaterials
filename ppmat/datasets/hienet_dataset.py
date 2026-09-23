@@ -29,10 +29,9 @@ computed here; they come from the checkpoint config.
 
 import paddle
 from ase.io import read
-from ppmat.datasets.custom_data_type import ConcatNumpyWarper
 
+from ppmat.datasets.custom_data_type import ConcatNumpyWarper
 from ppmat.models import build_graph_converter
-from ppmat.models.hienet.hienet_graph_converter import HIENetGraphConverter
 
 
 class HIENetDataset(paddle.io.Dataset):
@@ -50,9 +49,10 @@ class HIENetDataset(paddle.io.Dataset):
     def __init__(
         self,
         path: str,
-        converter: HIENetGraphConverter | dict,
+        converter,
         frame_offset: int = 0,
         num_frames: int | None = None,
+        **kwargs,  # for compatibility
     ):
         super().__init__()
         self.path = path

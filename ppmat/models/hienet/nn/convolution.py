@@ -16,14 +16,17 @@
 
 from typing import List
 
-from .. import _keys as KEY
 import paddle
-from ..e3nn.nn import FullyConnectedNet
-from ..e3nn.o3 import Irreps, TensorProduct
-from ..e3nn.util.jit import compile_mode
-from .._const import AtomGraphDataType
-from .activation import ShiftedSoftPlus
+
+from ppmat.models.common.activation import ShiftedSoftPlus
 from ppmat.utils.scatter import scatter
+
+from .. import _keys as KEY
+from .._const import AtomGraphDataType
+from ..e3nn.nn import FullyConnectedNet
+from ..e3nn.o3 import Irreps
+from ..e3nn.o3 import TensorProduct
+from ..e3nn.util.jit import compile_mode
 
 
 @compile_mode("script")

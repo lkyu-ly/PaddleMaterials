@@ -36,6 +36,7 @@ from ppmat.datasets.density_dataset import MPCubicDensityDataset
 from ppmat.datasets.density_dataset import OMol25MC5kDensityDataset
 from ppmat.datasets.density_dataset import OMol25MC5kTrimmedDensityDataset
 from ppmat.datasets.density_dataset import QM9DensityDataset
+from ppmat.datasets.hienet_dataset import HIENetDataset
 from ppmat.datasets.high_level_water_dataset import HighLevelWaterDataset
 from ppmat.datasets.jarvis_dataset import JarvisDataset
 from ppmat.datasets.matbench_dataset import MatbenchDataset
@@ -55,7 +56,6 @@ from ppmat.datasets.qm9_dataset import QM9Dataset  # noqa
 from ppmat.datasets.sfin_dataset import SFINDataset
 from ppmat.datasets.split_mptrj_data import none_to_zero
 from ppmat.datasets.transform import build_transforms
-from ppmat.models.hienet.hienet_dataset import HIENetDataset
 from ppmat.utils import logger
 
 __all__ = [

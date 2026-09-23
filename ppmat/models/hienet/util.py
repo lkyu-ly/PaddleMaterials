@@ -17,10 +17,12 @@
 import warnings
 from typing import Union
 
-from . import _keys as KEY
 import numpy as np
 import paddle
-from .e3nn.o3 import FullTensorProduct, Irreps
+
+from . import _keys as KEY
+from .e3nn.o3 import FullTensorProduct
+from .e3nn.o3 import Irreps
 
 
 class AverageNumber:
@@ -189,7 +191,9 @@ def _map_old_model(old_model_state_dict):
 
 
 def model_from_checkpoint(checkpoint):
-    from ._const import data_defaults, model_defaults, train_defaults
+    from ._const import data_defaults
+    from ._const import model_defaults
+    from ._const import train_defaults
     from .model_build import build_E3_equivariant_model
 
     if isinstance(checkpoint, str):
@@ -224,18 +228,9 @@ def model_from_checkpoint(checkpoint):
     return model, config
 
 
-def unlabeled_atoms_to_input(atoms, cutoff):
-    from .atom_graph_data import AtomGraphData
-    from .dataload import unlabeled_atoms_to_graph
-
-    atom_graph = AtomGraphData.from_numpy_dict(unlabeled_atoms_to_graph(atoms, cutoff))
-    atom_graph[KEY.POS].requires_grad_(True)
-    atom_graph[KEY.BATCH] = paddle.zeros([0])
-    return atom_graph
-
-
 def chemical_species_preprocess(input_chem):
     from ase.data import atomic_numbers
+
     from .nn.node_embedding import get_type_mapper_from_specie
 
     config = {}
@@ -272,9 +267,9 @@ def load_model_from_checkpoint(checkpoint):
     """
     Deprecated
     """
-    from ._const import (DEFAULT_DATA_CONFIG,
-                               DEFAULT_E3_EQUIVARIANT_MODEL_CONFIG,
-                               DEFAULT_TRAINING_CONFIG)
+    from ._const import DEFAULT_DATA_CONFIG
+    from ._const import DEFAULT_E3_EQUIVARIANT_MODEL_CONFIG
+    from ._const import DEFAULT_TRAINING_CONFIG
     from .model_build import build_E3_equivariant_model
 
     warnings.warn(

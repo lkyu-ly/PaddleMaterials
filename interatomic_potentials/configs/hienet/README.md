@@ -118,8 +118,8 @@ Forward and training accuracy of the PaddlePaddle port were verified against the
 
 | Gate                 | Comparison                                                              | Result                                                       |
 | :------------------- | :---------------------------------------------------------------------- | :----------------------------------------------------------- |
-| forward, fp64        | Paddle vs torch, 21-structure set (20 evaluated under the ≤64-atom cap) | worst mean_abs: E 4.5e-13 / F 2.0e-14 / S 1.5e-15            |
-| contract wrapper     | ppmat contract model vs the ported full-chain forward                   | max_abs: E 3.6e-15 / F 2.0e-15 / S 1.3e-16 (tolerance 1e-10) |
+| forward, fp64        | Paddle vs torch, 21-structure set (20 evaluated under the ≤64-atom cap) | worst mean_abs: E 2.3e-13 / F 8.9e-15 / S 5.4e-16            |
+| contract wrapper     | ppmat contract model vs the ported full-chain forward                   | max_abs: E 3.6e-15 / F 5.8e-15 / S 1.6e-16 (tolerance 1e-10) |
 | training loss parity | 36 training steps (2 epochs × 18 steps), fp32 GPU                       | mean_rel across E/F/S/total: 2.1e-5 ~ 5.5e-5                 |
 
 The workflow tests can be reproduced from the repository root:
@@ -134,14 +134,14 @@ Across all three gates, the differences between the torch and PaddlePaddle imple
 
 Training can be switched to compiled execution by setting `Execution.backend=cinn` in the config yaml. The backend takes effect through `paddle.jit.to_static(backend="CINN")` with `full_graph=False`, i.e. the SOT tier.
 
-Steady-state training time per step (nvidia GPU, PaddlePaddle 3.3.0, batch 2, 40-frame subset, steady state = mean of epochs 2-5, first epoch dropped):
+Steady-state training time per step (nvidia GPU, PaddlePaddle 3.4.0, batch 2, 40-frame subset, steady state = mean of epochs 2-5):
 
 | Mode            | steady-state s/step | Speedup |
 | :-------------- | :------------------ | :------ |
-| eager (default) | 0.474               | —       |
-| cinn (SOT)      | 0.418               | ~1.13x  |
+| eager (default) | 0.495               | —       |
+| cinn (SOT)      | 0.479               | ~1.03x  |
 
-Per-epoch jitter is visible at this small scale; treat 1.13x as an order-of-magnitude figure and do not extrapolate it to full-size runs. Compilation adds about +1.2 s to the first epoch and breaks even within roughly 2 epochs at this scale. Training losses stay finite and consistent across the two modes, as checked by the workflow test.
+Training losses stay finite and consistent across the two modes, as checked by the workflow test.
 
 ## Citation
 
